@@ -125,8 +125,6 @@ public class Noughts {
 
         public int maxInRow() {
             int max = 1;
-            if (noughtsExist() == false) return 0;
-            else {
                 for (int t = 0; t < width; ++t) {
 
                     for (int i = 0; i < height - 1; ++i) {
@@ -151,7 +149,7 @@ public class Noughts {
                     }
                 }
                 return max;
-            }
+
         }
 
 
