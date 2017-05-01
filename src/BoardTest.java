@@ -14,10 +14,10 @@ public class BoardTest {
         demo.addCross(3,1);
         demo.addNought(3,3);
         demo.addNought(0,3);
-        assertEquals(demo.get(3,2), Noughts.Sign.Cross);
-        assertEquals(demo.get(3,1), Noughts.Sign.Cross);
-        assertEquals(demo.get(3,3), Noughts.Sign.Nought);
-        assertEquals(demo.get(0,3), Noughts.Sign.Nought);
+        assertEquals(demo.get(3,2), Noughts.Sign.CROSS);
+        assertEquals(demo.get(3,1), Noughts.Sign.CROSS);
+        assertEquals(demo.get(3,3), Noughts.Sign.NOUGHT);
+        assertEquals(demo.get(0,3), Noughts.Sign.NOUGHT);
 
     }
 
@@ -74,6 +74,18 @@ public class BoardTest {
         demo2.addNought(0, 3);
         assertEquals(demo2.maxInRow(),2);
 
+    }
+
+    @Test
+
+    public void MaxInRowNoughtAndCross(){
+        Noughts.Board demo = new Noughts.Board(1, 4);
+        demo.addNought(0, 0);
+        demo.addCross(0, 1);
+        demo.addNought(0, 2);
+        demo.addNought(0, 3);
+        assertEquals(demo.maxInRowNought(),2);
+        assertEquals(demo.maxInRowCross(),1);
     }
 
 
