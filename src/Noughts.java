@@ -17,8 +17,7 @@ public class Noughts {
             else if (x == CROSS) return ("X ");
             else return ("- ");
 
-    }
-
+        }
 
     }
 
@@ -132,99 +131,54 @@ public class Noughts {
         }
 
 
-        public int maxInRow() {
+        public int maxInRowSign(Sign x) {
             int max = 1;
-                for (int t = 0; t < width; ++t) {
+            for (int t = 0; t < width; ++t) {
 
-                    for (int i = 0; i < height - 1; ++i) {
-
-                        Cell cell = new Cell(t, i);
-
-                        Sign startSign = signs.get(cell);
+                for (int i = 0; i < height - 1; ++i) {
 
 
-                        if (startSign == null) continue;
-                        for (Cell dir : DIRECTIONS) {
-                            Cell current = cell;
-                            int length = 1;
-                            for (; ; length++) {
-                                current = current.plus(dir);
-                                if (!correct(current)) break;
-                                if (get(current) != startSign) break;
-                            }
-                            if (length > max) max = length;
+                    Cell cell = new Cell(t, i);
+
+                    Sign startSign = signs.get(cell);
+
+
+                    if ((startSign == null) || (startSign != x)) continue;
+                    for (Cell dir : DIRECTIONS) {
+                        Cell current = cell;
+                        int length = 1;
+                        for (; ; length++) {
+                            current = current.plus(dir);
+                            if ((!correct(current)) || (get(current) != startSign)) break;
 
                         }
+
+                        if (length > max) max = length;
+
+
                     }
                 }
-                return max;
+            }
+            return max;
+
 
         }
+
+        public int maxInRow() {
+            return Math.max(maxInRowSign(Sign.CROSS), maxInRowSign(Sign.NOUGHT));
+
+        }
+
 
         public int maxInRowNought() {
-            int max = 1;
             if (noughtsExist() == false) return 0;
-            else {
-                for (int t = 0; t < width; ++t) {
-
-                    for (int i = 0; i < height - 1; ++i) {
-
-                        Cell cell = new Cell(t, i);
-
-                        Sign startSign = signs.get(cell);
-
-
-                        if ((startSign == null) || (startSign == Sign.CROSS)) continue;
-                        for (Cell dir : DIRECTIONS) {
-                            Cell current = cell;
-                            int length = 1;
-                            for (; ; length++) {
-                                current = current.plus(dir);
-                                if (!correct(current)) break;
-                                if (get(current) != startSign) break;
-                            }
-                            if (length > max) max = length;
-
-                        }
-                    }
-                }
-                return max;
-
-            }
+            else return maxInRowSign(Sign.NOUGHT);
         }
-
 
 
         public int maxInRowCross() {
-            int max = 1;
             if (crossesExist() == false) return 0;
-            else {
-                for (int t = 0; t < width; ++t) {
-
-                    for (int i = 0; i < height - 1; ++i) {
-
-                        Cell cell = new Cell(t, i);
-
-                        Sign startSign = signs.get(cell);
-
-
-                        if ((startSign == null) || (startSign == Sign.NOUGHT)) continue;
-                        for (Cell dir : DIRECTIONS) {
-                            Cell current = cell;
-                            int length = 1;
-                            for (; ; length++) {
-                                current = current.plus(dir);
-                                if (!correct(current)) break;
-                                if (get(current) != startSign) break;
-                            }
-                            if (length > max) max = length;
-
-                        }
-                    }
-                }
-                return max;
-
-            }
+            else return maxInRowSign(Sign.CROSS);
         }
 
 
@@ -237,7 +191,7 @@ public class Noughts {
                         sb.append("- ");
                         continue;
                     }
-                   sb = sb.append(Sign.StringBuilder(sign));
+                    sb = sb.append(Sign.StringBuilder(sign));
                 }
                 sb.append("\n");
             }
